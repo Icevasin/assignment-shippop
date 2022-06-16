@@ -1,0 +1,36 @@
+<%- include('layout.ejs'); %>
+<div class="container">
+    <div class="row justify-content-center">
+        <a href="/product/form">เพิ่มสินค้า</a>
+        <div class="container">
+            <div class="row my-5">
+        <% Object.values(products).forEach(function(item){ %>
+            <% if (item.Product_status == "available") { %>
+                <div class="col-lg-2 col-md-5 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="product/<%= item._id %>"><%= item.Product_name %></a>
+                            </h4>
+                            <h5>ราคา <%= item.Product_price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') %> บาท</h5>
+                            <div class="row justify-content-center">
+                                <td>
+                                    <a class="btn btn-success" href="addcart/<%= item._id %>" onclick="return confirm('คุณต้องการเพิ่มเข้าตะกร้าหรือไม่')">เพิ่มเข้าตะกร้า</a></td>
+                                <td>
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } %>  
+        <% }) %>
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+</body>
+
+</html>

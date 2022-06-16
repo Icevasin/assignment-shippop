@@ -1,0 +1,56 @@
+<%- include('layout.ejs'); %>
+<% var sum =0; %>
+<div class="container">
+    <div class="card-header">ตระกร้าสินค้า </div>
+    <div class=" justify-content-center">
+        
+        <% Object.values(carts).forEach(function(item){ %>
+            <!-- หาผลรวมของราคาทั้งหมด -->
+                <% sum += item.item[0].price * item.item[0].quantity %>
+                <div class="col-lg-9 col-md-5">
+                        <div class="card-body">
+                            <h4 class="justify-content-center">
+                                
+                                <a >ชื่อสินค้า <%= item.item[0].title %> </a>
+                                <a >
+                                    <form action="/increase" method="post">
+                                        <input type="hidden"  name="productId" value="<%= item.item[0].productId %>" />
+                                        <input type="hidden"  name="title" value="<%= item.item[0].title %>" />
+                                        <input type="hidden"  name="price" value="<%= item.item[0].price %>" />
+                                        <input type="hidden"  name="quantity" value="1" />
+                                        <button type="submit" class="btn btn-success">เพิ่ม 1 ชิ้น</button></td>
+                                    </form> 
+                                    จำนวน <%= item.item[0].quantity %> ชิ้น
+                                    <form action="/decrease" method="post">
+                                        <input type="hidden"  name="productId" value="<%= item.item[0].productId %>" />
+                                        <input type="hidden"  name="title" value="<%= item.item[0].title %>" />
+                                        <input type="hidden"  name="price" value="<%= item.item[0].price %>" />
+                                        <input type="hidden"  name="quantity" value="1" />
+                                        <button type="submit" class="btn btn-danger">ลด 1 ชิ้น</button></td>
+                                    </form> 
+                                    </td>
+                                    <td></a>
+                                     
+                                <a >ราคา <%= item.item[0].price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') %> บาท</a>
+                                <a class="btn btn-danger" href="deletecart/<%= item._id %>" onclick="return confirm('คุณต้องการลบสินค้าออกจากตระกร้าหรือไม่')">ลบ</a></td>
+                            </h4>
+                            
+
+                        </div>
+                    
+                </div>
+              
+        <% }) %>
+        <h4 class="justify-content-center">
+            <a >รวมราคา  <%=  sum.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')  %> บาท</a>
+
+        </h4>
+        
+           
+
+    </div>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<%- include('layout.ejs'); %>
+    <% var sum=0; %>
+        <% var num=product.Product_rating.length; %>
+            <% var check=0; %>
+                <div class="container">
+                    <div class="card-header">รายละเอียดสินค้า </div>
+                    <div class=" justify-content-center">
+                        <h3>ชื่อสินค้า <%= product.Product_name %>
+                        </h3> &nbsp;<p>
+                        <h3>รายละเอียด <%= product.Product_description %>
+                        </h3> <br>
+                        <h3>ราคา <%= product.Product_price %>
+                        </h3> <br>
+
+                        <h3>เจ้าของสินค้า <%= product.Product_seller %>
+                        </h3> <br>
+
+                        <h3>วันที่สร้างสินค้า <%= product.Product_date %>
+                        </h3> <br>
+
+                        <% if (product.Product_seller===user.name ) {%>
+                            <h3>
+                                สถานะสินค้า <% if (product.Product_status==="available" ) { %>
+                                    <a class="btn btn-success" href="close/<%= product._id %>"
+                                        onclick="return confirm('คุณต้องการปิดข้อมูลสินค้า')">เห็นสินค้า</a></td>
+                                    <% } else { %>
+                                        <a class="btn btn-secondary" href="open/<%= product._id %>"
+                                            onclick="return confirm('คุณต้องการเปิดข้อมูลสินค้า')">ไม่เห็นสินค้า</a>
+                                        </td>
+                                        <% } %>
+                            </h3> <br>
+                            <% } %>
+
+                                <!-- ตรวจสอบว่าเคยรีวิวไปแล้วหรือยัง -->
+                                <% for(var i=0 ; i < product.Product_rating.length ; i++){ %>
+                                    <% if(product.Product_rating[i].user===user.name){ %>
+                                        <% check=1; %>
+                                            <% } %>
+                                                <% } %>
+                                                            <!-- ผลรวมของคะแนนรีวิว -->
+                                                    <% for(var i=0 ; i < product.Product_rating.length ; i++){ %>
+                                                        <% sum +=product.Product_rating[i].rating %>
+                                                            <% } %>
+
+                                                                <h3>คะแนนสินค้า <%= (sum/num).toFixed(2) %>
+                                                                </h3> <br>
+
+
+                                                                <% if (product.Product_seller===user.name ) {%>
+
+                                                                    <% } else { %>
+                                                                        <% if(check===0){%>
+                                                                            <form action="/product/rating"
+                                                                                method="post">
+                                                                                <input type="hidden" name="rating_id"
+                                                                                    value="<%= product._id %>">
+                                                                                <button type="submit"
+                                                                                    class="btn btn-primary">ให้คะแนนสินค้า</button>
+                                                                                </td>
+                                                                            </form>
+                                                                            <% } %>
+                                                                                <% } %>
+
+                                                                                    <td>
+                                                                                        <a class="btn btn-success"
+                                                                                            href="/addcart/<%= product._id %>"
+                                                                                            onclick="return confirm('คุณต้องการเพิ่มเข้าตะกร้าหรือไม่')">เพิ่มเข้าตะกร้า</a>
+                                                                                    </td>
+                                                                                    <td>
+
+                    </div>
+                </div>
+
+                </body>
+
+                </html>
